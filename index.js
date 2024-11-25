@@ -1,15 +1,19 @@
 const express = require('express');
-const { resolve } = require('path');
+const bodyParser = require('body-parser');
+const restaurantRoutes = require('./views/restaurant');
+const dishesRoutes = require('./views/dishes');
 
 const app = express();
-const port = 3010;
+const PORT = 3000;
 
-app.use(express.static('static'));
+// Middleware
+app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-  res.sendFile(resolve(__dirname, 'pages/index.html'));
-});
+// Routes
+app.use('/restaurants', restaurantRoutes);
+app.use('/dishes', dishesRoutes);
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
